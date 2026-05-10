@@ -1,0 +1,12 @@
+run_id: exp-qlearning-1
+alpha: 0.1
+gamma: 0.95
+epsilon: 0.3
+epsilon_decay: 0.99
+epsilon_min: 0.02
+episodes: 500
+steps_per_episode: 24
+seed: 42
+output_policy: policies/policy_v1.pkl
+output_results: experiments/results_1.csv
+log_file: experiments/log.json
