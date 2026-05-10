@@ -1,3 +1,4 @@
+import argparse
 import pickle
 import numpy as np
 from sim.hvac_env import HVACEnv
@@ -29,8 +30,12 @@ def run_episode(env, policy_func, steps=24):
     return total_reward, total_energy, total_discomfort
 
 def main():
+    parser = argparse.ArgumentParser(description="Evaluate trained RL policy vs Baseline")
+    parser.add_argument("--policy", type=str, default="policies/policy_v1.pkl", help="Path to policy pkl file")
+    args = parser.parse_args()
+
     # Load trained policy
-    policy_path = "policies/policy_v1.pkl"
+    policy_path = args.policy
     try:
         with open(policy_path, "rb") as f:
             q_table = pickle.load(f)
@@ -91,19 +96,19 @@ def main():
     # Lower discomfort is better
     imp_discomfort = ((avg_base_discomfort - avg_rl_discomfort) / max(0.1, avg_base_discomfort)) * 100
 
-    print("\n--- Evaluation Results (Averaged over 30 days) ---")
-    print(f"{'Metric':<20} | {'Baseline (Timer)':<18} | {'RL Agent':<18} | {'Improvement':<15}")
-    print("-" * 75)
-    print(f"{'Avg Reward':<20} | {avg_base_reward:<18.2f} | {avg_rl_reward:<18.2f} | {imp_reward:+.2f}%")
-    print(f"{'Avg Energy Cost':<20} | {avg_base_energy:<18.2f} | {avg_rl_energy:<18.2f} | {imp_energy:+.2f}%")
-    print(f"{'Avg Discomfort Steps':<20} | {avg_base_discomfort:<18.2f} | {avg_rl_discomfort:<18.2f} | {imp_discomfort:+.2f}%")
-    print("-" * 75)
-    
-    print("\n=== SDG Impact Statement ===")
-    print("SDG 7 (Affordable and Clean Energy):")
-    print(f"By dynamically adapting to thermal environments and minimizing unnecessary heating/cooling, the RL agent reduced energy usage by {imp_energy:.2f}%. This translates to lower carbon emissions and more affordable operational costs.")
-    print("\nSDG 11 (Sustainable Cities and Communities):")
-    print(f"The smart HVAC policy improved human comfort by decreasing discomfort steps by {imp_discomfort:.2f}%. Enhancing building efficiency at scale contributes directly to sustainable, resilient urban infrastructure while maintaining a high quality of life for occupants.")
+    print("\n====================================================")
+    print("  METRIC                 FIXED-TIMER    RL-POLICY")
+    print("----------------------------------------------------")
+    print(f"  Avg episode reward         {avg_base_reward:<14.2f}{avg_rl_reward:<14.2f}")
+    print(f"  Total energy/episode       {avg_base_energy:<14.2f}{avg_rl_energy:<14.2f}")
+    print(f"  Discomfort steps/ep        {avg_base_discomfort:<14.2f}{avg_rl_discomfort:<14.2f}")
+    print("====================================================")
+    print(f"  Energy saving      : {imp_energy:+.2f}%")
+    print(f"  Comfort improvement: {imp_discomfort:+.2f}%")
+    print("\n  SDG 7 Impact: {:.2f}% energy reduction supports".format(imp_energy))
+    print("  affordable, clean energy use in buildings.")
+    print("\n  SDG 11 Impact: {:.2f}% fewer discomfort steps".format(imp_discomfort))
+    print("  supports sustainable, liveable urban environments.")
 
 if __name__ == "__main__":
     main()
