@@ -1,12 +1,13 @@
 run_id: exp-qlearning-2
+algorithm: qlearning
 alpha: 0.1
 gamma: 0.95
 epsilon: 0.5
 epsilon_decay: 0.995
 epsilon_min: 0.05
-episodes: 500
+episodes: 100
 steps_per_episode: 24
 seed: 42
-output_policy: policies/policy_v2_explored.pkl
-output_results: experiments/results_2.csv
-log_file: experiments/log.json
+policy_save_path: policies/policy_v2_explored.pkl
+results_save_path: experiments/results_2.csv
+log_save_path: experiments/log.json
