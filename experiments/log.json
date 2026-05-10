@@ -38,5 +38,13 @@
         "final_avg_reward": 88.76292535398231,
         "policy_path": "policies/policy_v1.pkl",
         "results_path": "experiments/results_1.csv"
+    },
+    {
+        "run_id": "exp-qlearning-1",
+        "episodes": 100,
+        "final_epsilon": 0.10980970238196874,
+        "final_avg_reward": -133.03092323171433,
+        "policy_path": "policies/policy_v1.pkl",
+        "results_path": "experiments/results_1.csv"
     }
 ]
