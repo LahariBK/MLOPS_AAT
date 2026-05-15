@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  train_v1:
+    build: .
+    command: python train.py --config configs/qlearning_v1.yaml
+    volumes:
+      - ./experiments:/app/experiments
+      - ./policies:/app/policies
+
+  train_v2:
+    build: .
+    command: python train.py --config configs/qlearning_v2.yaml
+    volumes:
+      - ./experiments:/app/experiments
+      - ./policies:/app/policies
